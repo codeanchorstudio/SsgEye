@@ -3,198 +3,907 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CodeAnchor · MediSync — 신세계 안과의원 RPA 솔루션</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+<title>SsgEye — 안과 자동화 솔루션</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&family=Sora:wght@300;400;600;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --blue: #1E4FD8;
-    --blue-light: #4F7EFF;
-    --blue-pale: #EBF0FF;
-    --teal: #0BA37F;
-    --teal-light: #2DC9A0;
-    --teal-pale: #E6FAF5;
-    --navy: #0D1B3E;
-    --ink: #1A1F36;
-    --muted: #6B7280;
-    --border: #E5E9F2;
-    --bg: #F7F9FF;
-    --white: #FFFFFF;
-    --mono: 'IBM Plex Mono', monospace;
-    --sans: 'Noto Sans KR', sans-serif;
-    --display: 'Sora', sans-serif;
-  }
+:root {
+  --navy:   #0B1628;
+  --navy2:  #111E35;
+  --navy3:  #1A2D50;
+  --accent: #3B82F6;
+  --accent2:#60A5FA;
+  --teal:   #14B8A6;
+  --gold:   #F59E0B;
+  --white:  #F8FAFF;
+  --gray:   #94A3B8;
+  --gray2:  #CBD5E1;
+  --card:   rgba(255,255,255,0.04);
+  --border: rgba(255,255,255,0.08);
+}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { font-family: var(--sans); background: var(--bg); color: var(--ink); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* NAV */
-  nav { position: sticky; top: 0; z-index: 100; background: rgba(247,249,255,0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 60px; }
-  .nav-logo { font-family: var(--display); font-weight: 700; font-size: 15px; color: var(--navy); display: flex; align-items: center; gap: 8px; }
-  .nav-logo .dot { width: 8px; height: 8px; background: var(--blue); border-radius: 50%; }
+html { scroll-behavior: smooth; }
 
-  /* HERO */
-  .hero { padding: 6rem 2rem 4rem; text-align: center; }
-  h1 { font-family: var(--display); font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 700; color: var(--navy); line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 1rem; }
-  h1 em { font-style: normal; color: var(--blue); }
-  .hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 600px; margin: 0 auto 2.5rem; }
+body {
+  background: var(--navy);
+  color: var(--white);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
 
-  /* NEW: RELEASE SECTION (최신 배포) */
-  .release-container { max-width: 1000px; margin: 0 auto 4rem; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px; padding: 0 2rem; }
-  .release-main { background: var(--navy); color: #fff; border-radius: 20px; padding: 2.5rem; }
-  .btn-dl { background: var(--blue-light); color: #fff; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 15px; display: inline-flex; align-items: center; gap: 10px; margin-top: 1.5rem; transition: 0.2s; }
-  .btn-dl:hover { background: var(--blue); transform: translateY(-2px); }
-  
-  .release-side { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; }
-  .update-list { list-style: none; font-size: 13px; color: var(--muted); }
-  .update-list li { margin-bottom: 8px; display: flex; gap: 8px; }
-  .update-list li::before { content: '•'; color: var(--blue); }
+/* ── 배경 효과 ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% -10%, rgba(59,130,246,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 110%, rgba(20,184,166,0.08) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
 
-  /* TABS (기존 디자인 복구) */
-  .flow-tabs { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; }
-  .flow-tab { padding: 0.8rem 2rem; border-radius: 50px; border: 1px solid var(--border); background: var(--white); cursor: pointer; font-weight: 500; font-size: 14px; transition: 0.3s; }
-  .flow-tab.active.blue { background: var(--blue); color: #fff; border-color: var(--blue); }
-  .flow-tab.active.teal { background: var(--teal); color: #fff; border-color: var(--teal); }
+/* ── NOISE TEXTURE ── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
 
-  /* PANELS */
-  .flow-panel { display: none; max-width: 1000px; margin: 0 auto; padding: 0 2rem; }
-  .flow-panel.active { display: block; animation: fadeIn 0.5s ease-out; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 0 5%;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(11,22,40,0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+  color: var(--white);
+}
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a {
+  color: var(--gray);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
 
-  .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-  .card { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 2.5rem; transition: 0.3s; }
-  .card:hover { border-color: var(--blue-light); transform: translateY(-5px); }
-  .card h3 { font-size: 18px; margin-bottom: 1rem; color: var(--navy); }
+/* ── HERO ── */
+.hero {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 5% 80px;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(59,130,246,0.12);
+  border: 1px solid rgba(59,130,246,0.3);
+  border-radius: 100px;
+  padding: 0.35rem 1rem;
+  font-size: 0.8rem;
+  color: var(--accent2);
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 2rem;
+  animation: fadeDown 0.6s ease both;
+}
+.hero-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--teal);
+  box-shadow: 0 0 8px var(--teal);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
-  /* HISTORY SECTION */
-  .history-section { max-width: 1000px; margin: 6rem auto; padding: 0 2rem; }
-  .history-item { background: var(--white); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
-  .history-trigger { width: 100%; padding: 1.2rem 1.5rem; border: none; background: none; text-align: left; cursor: pointer; display: flex; justify-content: space-between; }
-  .history-content { padding: 0 1.5rem 1.5rem; display: none; font-size: 13px; border-top: 1px dashed var(--border); padding-top: 1rem; }
-  .history-item.active .history-content { display: block; }
+.hero h1 {
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.5rem;
+  animation: fadeDown 0.6s 0.1s ease both;
+}
+.hero h1 .line1 { display: block; color: var(--white); }
+.hero h1 .line2 {
+  display: block;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--teal) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 
-  footer { text-align: center; padding: 4rem 2rem; font-family: var(--mono); font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); }
+.hero-desc {
+  max-width: 560px;
+  color: var(--gray2);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: 3rem;
+  animation: fadeDown 0.6s 0.2s ease both;
+}
 
-  @media (max-width: 850px) { .release-container { grid-template-columns: 1fr; } }
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeDown 0.6s 0.3s ease both;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--accent);
+  color: white;
+  text-decoration: none;
+  padding: 0.8rem 2rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+.btn-primary:hover {
+  background: var(--accent2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(59,130,246,0.4);
+}
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--card);
+  color: var(--white);
+  text-decoration: none;
+  padding: 0.8rem 2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.btn-secondary:hover {
+  background: rgba(255,255,255,0.08);
+  transform: translateY(-2px);
+}
+
+.hero-stats {
+  margin-top: 4rem;
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+  animation: fadeDown 0.6s 0.4s ease both;
+}
+.stat { text-align: center; }
+.stat-num {
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  font-size: 1.8rem;
+  color: var(--white);
+  display: block;
+}
+.stat-label { font-size: 0.8rem; color: var(--gray); }
+
+/* ── SECTION COMMON ── */
+section {
+  position: relative;
+  z-index: 1;
+  padding: 100px 5%;
+}
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.section-title {
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+.section-desc { color: var(--gray2); max-width: 480px; line-height: 1.8; }
+
+/* ── PROGRAMS ── */
+#programs { background: rgba(255,255,255,0.01); }
+.programs-header { text-align: center; margin-bottom: 4rem; }
+.programs-header .section-desc { margin: 0 auto; }
+
+.programs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  max-width: 1100px;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.program-card {
+  background: var(--navy2);
+  padding: 3rem;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s;
+}
+.program-card:hover { background: var(--navy3); }
+.program-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.program-card.sync::before { background: linear-gradient(90deg, var(--accent), var(--teal)); }
+.program-card.view::before { background: linear-gradient(90deg, var(--gold), #F97316); }
+
+.program-tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 1.5rem;
+}
+.sync .program-tag { background: rgba(59,130,246,0.15); color: var(--accent2); }
+.view .program-tag { background: rgba(245,158,11,0.15); color: var(--gold); }
+
+.program-name {
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  font-size: 1.6rem;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
+}
+.program-sub { color: var(--gray); font-size: 0.85rem; margin-bottom: 1.5rem; }
+
+.program-desc { color: var(--gray2); line-height: 1.8; margin-bottom: 2rem; font-size: 0.95rem; }
+
+.feature-list { list-style: none; margin-bottom: 2.5rem; }
+.feature-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+  color: var(--gray2);
+  border-bottom: 1px solid var(--border);
+}
+.feature-list li:last-child { border-bottom: none; }
+.feature-list li::before {
+  content: '→';
+  color: var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.view .feature-list li::before { color: var(--gold); }
+
+.program-version {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: rgba(255,255,255,0.04);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+}
+.version-info { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
+.version-num { color: var(--white); font-weight: 700; }
+.version-date { color: var(--gray); font-size: 0.78rem; margin-top: 2px; }
+.version-badge {
+  background: rgba(20,184,166,0.15);
+  color: var(--teal);
+  border: 1px solid rgba(20,184,166,0.3);
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.dl-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.9rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+.sync .dl-btn { background: var(--accent); color: white; }
+.sync .dl-btn:hover { background: var(--accent2); box-shadow: 0 6px 20px rgba(59,130,246,0.4); transform: translateY(-1px); }
+.view .dl-btn { background: var(--gold); color: var(--navy); }
+.view .dl-btn:hover { background: #FBBF24; box-shadow: 0 6px 20px rgba(245,158,11,0.4); transform: translateY(-1px); }
+
+/* ── HOW IT WORKS ── */
+#how {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.how-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+.how-steps { margin-top: 3rem; }
+.step {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.step:last-child { border-bottom: none; }
+.step-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: var(--accent);
+  background: rgba(59,130,246,0.12);
+  border: 1px solid rgba(59,130,246,0.25);
+  border-radius: 8px;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.step-title { font-weight: 700; margin-bottom: 0.25rem; font-size: 0.95rem; }
+.step-desc { font-size: 0.875rem; color: var(--gray2); line-height: 1.7; }
+
+.devices-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+.device-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+  transition: all 0.3s;
+}
+.device-card:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(59,130,246,0.3);
+  transform: translateY(-3px);
+}
+.device-icon {
+  font-size: 1.8rem;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+.device-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.3rem; }
+.device-method { font-size: 0.75rem; color: var(--teal); font-family: 'JetBrains Mono', monospace; }
+
+/* ── VERSION HISTORY ── */
+#history { max-width: 900px; margin: 0 auto; }
+.history-header { margin-bottom: 3rem; }
+
+.history-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0;
+}
+.tab-btn {
+  padding: 0.6rem 1.5rem;
+  border: none;
+  background: transparent;
+  color: var(--gray);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all 0.2s;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.tab-btn.active { color: var(--white); border-bottom-color: var(--accent); }
+.tab-btn:hover:not(.active) { color: var(--gray2); }
+
+.history-panel { display: none; }
+.history-panel.active { display: block; }
+
+.release {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 2rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--border);
+  animation: fadeIn 0.3s ease;
+}
+.release:last-child { border-bottom: none; }
+.release-meta {}
+.release-version {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--white);
+  margin-bottom: 0.4rem;
+}
+.release-date { font-size: 0.8rem; color: var(--gray); }
+.release-tag {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+}
+.tag-latest { background: rgba(20,184,166,0.15); color: var(--teal); }
+.tag-stable { background: rgba(59,130,246,0.12); color: var(--accent2); }
+.tag-fix    { background: rgba(245,158,11,0.12); color: var(--gold); }
+
+.release-content {}
+.release-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.75rem; }
+.change-list { list-style: none; }
+.change-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--gray2);
+  padding: 0.3rem 0;
+  line-height: 1.6;
+}
+.change-type {
+  flex-shrink: 0;
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  margin-top: 1px;
+}
+.ct-feat { background: rgba(59,130,246,0.15); color: var(--accent2); }
+.ct-fix  { background: rgba(245,158,11,0.15); color: var(--gold); }
+.ct-perf { background: rgba(20,184,166,0.15); color: var(--teal); }
+.ct-break{ background: rgba(239,68,68,0.15); color: #F87171; }
+
+/* ── FOOTER ── */
+footer {
+  position: relative;
+  z-index: 1;
+  padding: 3rem 5%;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer-logo {
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+}
+.footer-logo span { color: var(--accent); }
+.footer-copy { font-size: 0.8rem; color: var(--gray); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .programs-grid, .how-inner { grid-template-columns: 1fr; }
+  .hero-stats { gap: 2rem; }
+  .release { grid-template-columns: 1fr; gap: 0.75rem; }
+  nav .nav-links { display: none; }
+}
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-  <div class="nav-logo"><span class="dot"></span> CodeAnchor Studio</div>
-  <div class="nav-links" style="font-size: 13px; color: var(--muted); display: flex; gap: 20px;">
-    <a href="#download" style="text-decoration: none; color: inherit;">배포센터</a>
-    <a href="#history" style="text-decoration: none; color: inherit;">히스토리</a>
+  <div class="nav-logo">Ssg<span>Eye</span></div>
+  <div class="nav-links">
+    <a href="#programs">프로그램</a>
+    <a href="#how">동작 방식</a>
+    <a href="#history">버전 히스토리</a>
   </div>
 </nav>
 
-<div class="hero">
-  <div style="font-family: var(--mono); font-size: 12px; color: var(--blue); margin-bottom: 1rem;">OFFICIAL RELEASE PORTAL</div>
-  <h1>신세계 안과 RPA <em>MediSync</em></h1>
-  <p class="hero-sub">기존의 복잡한 업무를 자동화하여 진료에만 집중할 수 있는 환경을 만듭니다.</p>
-</div>
-
-<div class="release-container" id="download">
-  <div class="release-main">
-    <div style="font-family: var(--mono); font-size: 12px; opacity: 0.6; margin-bottom: 0.5rem;">CURRENT STABLE VERSION</div>
-    <h2 style="font-family: var(--display);">MediSync v1.0.5</h2>
-    <a href="https://github.com/codeanchorstudio/SsgEye/releases/download/v1.0.5/MediSync_v1.0.5.zip" class="btn-dl">
-      📥 최신 버전 다운로드 (.zip)
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">안과 자동화 솔루션 · SsgEye Suite</div>
+  <h1>
+    <span class="line1">환자 정보 입력,</span>
+    <span class="line2">이제 자동으로.</span>
+  </h1>
+  <p class="hero-desc">
+    접수 프로그램에서 환자 정보를 읽어 Optos, Heidelberg, Zeiss에<br>
+    자동으로 동기화하는 안과 전용 자동화 솔루션입니다.
+  </p>
+  <div class="hero-actions">
+    <a href="#programs" class="btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      다운로드
     </a>
-    <div style="margin-top: 1.5rem; font-size: 12px; opacity: 0.5; font-family: var(--mono);">Released on 2026-04-05 · Windows 10/11</div>
+    <a href="#history" class="btn-secondary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      버전 히스토리
+    </a>
   </div>
-  <div class="release-side">
-    <h3 style="font-size: 14px; margin-bottom: 1rem;">v1.0.5 업데이트 요약</h3>
-    <ul class="update-list">
-      <li>Zeiss 장비 연동 모듈 안정화</li>
-      <li>대시보드 로딩 속도 개선</li>
-      <li>환자 데이터 동기화 예외 처리 강화</li>
-    </ul>
-  </div>
-</div>
-
-<div class="flow-tabs">
-  <div class="flow-tab active blue" onclick="switchTab('medisync')">MediSync (데이터 동기화)</div>
-  <div class="flow-tab" onclick="switchTab('mediview')">MediView (이미지 뷰어)</div>
-</div>
-
-<div id="panel-medisync" class="flow-panel active">
-  <div class="feature-grid">
-    <div class="card">
-      <h3>자동 데이터 동기화</h3>
-      <p style="font-size: 14px; color: var(--muted);">원무 접수와 동시에 각 검사 장비로 환자 정보를 자동으로 전송합니다.</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">3</span>
+      <span class="stat-label">연동 장비</span>
     </div>
-    <div class="card">
-      <h3>장비 통합 관리</h3>
-      <p style="font-size: 14px; color: var(--muted);">Optos, Zeiss, Heidelberg 등 다양한 제조사의 장비를 하나의 시스템으로 연결합니다.</p>
+    <div class="stat">
+      <span class="stat-num">2</span>
+      <span class="stat-label">전용 프로그램</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">100%</span>
+      <span class="stat-label">자동화</span>
     </div>
   </div>
-</div>
+</section>
 
-<div id="panel-mediview" class="flow-panel">
-  <div class="feature-grid">
-    <div class="card">
-      <h3>고해상도 이미지 뷰어</h3>
-      <p style="font-size: 14px; color: var(--muted);">검사 결과를 진료실에서 즉시 고해상도로 확인하고 판독할 수 있습니다.</p>
-    </div>
-    <div class="card">
-      <h3>히스토리 비교</h3>
-      <p style="font-size: 14px; color: var(--muted);">이전 검사 결과와 현재 결과를 한 화면에서 대조하여 경과를 관찰합니다.</p>
-    </div>
+<!-- PROGRAMS -->
+<section id="programs">
+  <div class="programs-header fade-up">
+    <div class="section-label">PROGRAMS</div>
+    <h2 class="section-title">두 가지 버전으로<br>제공됩니다</h2>
+    <p class="section-desc">사용 목적에 맞게 선택하세요. 원무 직원용과 원장님용 각각 최적화되어 있습니다.</p>
   </div>
-</div>
 
-<div class="history-section" id="history">
-  <h2 style="font-family: var(--display); font-size: 20px; margin-bottom: 2rem;">릴리즈 히스토리</h2>
-  
-  <div class="history-item active">
-    <button class="history-trigger" onclick="toggleHistory(this)">
-      <span style="font-weight: 600;">v1.0.5</span>
-      <span style="color: var(--muted); font-size: 12px;">2026. 04. 05</span>
-    </button>
-    <div class="history-content">
-      <ul class="update-list">
-        <li>[신규] Zeiss 장비 데이터 파싱 최적화</li>
-        <li>[수정] 특정 환경에서 로그 파일 생성 오류 해결</li>
+  <div class="programs-grid fade-up">
+    <!-- MediSync -->
+    <div class="program-card sync">
+      <div class="program-tag">MEDISYNC · 원무용</div>
+      <div class="program-name">SsgEyeMediSync</div>
+      <div class="program-sub">원무 직원 전용 · 수동 시작 방식</div>
+      <p class="program-desc">
+        접수 프로그램에서 환자 정보를 읽어 시작 버튼 하나로 Optos, Heidelberg, Zeiss 세 장비에 신규 환자를 순차 등록합니다.
+      </p>
+      <ul class="feature-list">
+        <li>환자 성명 · 차트번호 · 생년월일 · 성별 자동 추출</li>
+        <li>세 장비 순차 자동 입력 및 상태 표시</li>
+        <li>중복 환자 감지 및 알림</li>
+        <li>개별 장비 재시도 기능</li>
+        <li>동일 환자 중복 실행 방지</li>
       </ul>
+      <div class="program-version">
+        <div class="version-info">
+          <div class="version-num">v1.0.4</div>
+          <div class="version-date">2026-04-04 릴리즈</div>
+        </div>
+        <span class="version-badge">LATEST</span>
+      </div>
+      <a href="#" class="dl-btn" onclick="alert('준비 중입니다')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        MediSync 다운로드
+      </a>
+    </div>
+
+    <!-- MediView -->
+    <div class="program-card view">
+      <div class="program-tag">MEDIVIEW · 원장님용</div>
+      <div class="program-name">SsgEyeMediView</div>
+      <div class="program-sub">원장님 전용 · 백그라운드 자동 방식</div>
+      <p class="program-desc">
+        트레이에서 조용히 실행되며 접수 프로그램에서 엔터 입력 또는 그리드 더블클릭 시 Optos, Heidelberg, Zeiss에 환자번호를 자동 분배합니다.
+      </p>
+      <ul class="feature-list">
+        <li>백그라운드 실행 · 별도 조작 불필요</li>
+        <li>엔터 / 더블클릭 자동 감지</li>
+        <li>실행 중인 장비만 선택 처리</li>
+        <li>환경설정으로 장비별 활성화 제어</li>
+        <li>실시간 상태 오버레이 표시</li>
+      </ul>
+      <div class="program-version">
+        <div class="version-info">
+          <div class="version-num">v1.2.1</div>
+          <div class="version-date">2026-04-04 릴리즈</div>
+        </div>
+        <span class="version-badge">LATEST</span>
+      </div>
+      <a href="#" class="dl-btn" onclick="alert('준비 중입니다')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        MediView 다운로드
+      </a>
     </div>
   </div>
+</section>
 
-  <div class="history-item">
-    <button class="history-trigger" onclick="toggleHistory(this)">
-      <span style="font-weight: 600;">v1.0.0</span>
-      <span style="color: var(--muted); font-size: 12px;">2026. 02. 28</span>
-    </button>
-    <div class="history-content">
-      <p>신세계 안과 RPA 솔루션 공식 런칭</p>
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="how-inner">
+    <div class="fade-up">
+      <div class="section-label">HOW IT WORKS</div>
+      <h2 class="section-title">어떻게<br>동작하나요?</h2>
+      <p class="section-desc">복잡한 설정 없이 설치 후 바로 사용할 수 있습니다.</p>
+      <div class="how-steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div>
+            <div class="step-title">환자 정보 감지</div>
+            <div class="step-desc">접수 프로그램에서 환자를 조회하고 엔터 또는 시작 버튼을 누릅니다.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div>
+            <div class="step-title">자동 추출</div>
+            <div class="step-desc">성명, 차트번호, 생년월일, 성별을 접수 프로그램에서 자동으로 읽어옵니다.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div>
+            <div class="step-title">장비 분배</div>
+            <div class="step-desc">실행 중인 장비 프로그램에 순서대로 환자 정보를 자동 입력합니다.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div>
+            <div class="step-title">완료 확인</div>
+            <div class="step-desc">각 장비별 성공 / 실패 / 건너뜀 상태를 실시간으로 확인합니다.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fade-up">
+      <div class="section-label">SUPPORTED DEVICES</div>
+      <h2 class="section-title">지원<br>장비</h2>
+      <p class="section-desc">세 가지 주요 안과 장비 소프트웨어를 지원합니다.</p>
+      <div class="devices-grid">
+        <div class="device-card">
+          <span class="device-icon">👁</span>
+          <div class="device-name">Optos</div>
+          <div class="device-method">UIA</div>
+        </div>
+        <div class="device-card">
+          <span class="device-icon">🔬</span>
+          <div class="device-name">Heidelberg</div>
+          <div class="device-method">UIA</div>
+        </div>
+        <div class="device-card">
+          <span class="device-icon">⚡</span>
+          <div class="device-name">ZEISS</div>
+          <div class="device-method">Coordinate</div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
+<!-- VERSION HISTORY -->
+<section id="history" style="padding-top:0">
+  <div id="history-inner" class="fade-up">
+    <div class="history-header">
+      <div class="section-label">CHANGELOG</div>
+      <h2 class="section-title">버전 히스토리</h2>
+      <p class="section-desc">각 버전의 변경사항을 확인하세요.</p>
+    </div>
+
+    <div class="history-tabs">
+      <button class="tab-btn active" onclick="switchTab('sync')">MediSync</button>
+      <button class="tab-btn" onclick="switchTab('view')">MediView</button>
+    </div>
+
+    <!-- MediSync History -->
+    <div id="tab-sync" class="history-panel active">
+      <div class="release">
+        <div class="release-meta">
+          <div class="release-version">v1.0.4</div>
+          <div class="release-date">2026-04-04</div>
+          <span class="release-tag tag-latest">LATEST</span>
+        </div>
+        <div class="release-content">
+          <div class="release-title">안정성 개선 및 버그 수정</div>
+          <ul class="change-list">
+            <li><span class="change-type ct-perf">PERF</span>Optos File 툴바 탐색 TControlBar 2단계 탐색으로 교체 + 캐싱 적용 (Patient History 누적 속도 저하 해소)</li>
+            <li><span class="change-type ct-fix">FIX</span>Optos 입력 필드 탐색 실패 — 렌더링 대기 재시도 루프 추가 (BUG-02)</li>
+            <li><span class="change-type ct-fix">FIX</span>다른 프로세스 포그라운드 점유 시 버튼 미동작 — ForceSetForegroundWindow 적용 (UserBug-04)</li>
+            <li><span class="change-type ct-perf">PERF</span>Step2 SelectPatient 폴링 20회→60회, Step3 핸들 폴링 20회→50회로 증가</li>
+            <li><span class="change-type ct-fix">FIX</span>개별 타임아웃 수치 조정 (BUG-01)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release-meta">
+          <div class="release-version">v1.0.3</div>
+          <div class="release-date">2026-03-31</div>
+          <span class="release-tag tag-stable">STABLE</span>
+        </div>
+        <div class="release-content">
+          <div class="release-title">Zeiss 안정성 개선</div>
+          <ul class="change-list">
+            <li><span class="change-type ct-fix">FIX</span>Zeiss 필드 누락/중복 입력 — Ctrl+V 후 300ms, TAB 후 300ms로 증가 (UserBug-02)</li>
+            <li><span class="change-type ct-fix">FIX</span>Zeiss Step1 메인창 탐색 방식 교체 — Process.MainWindowHandle 대신 타이틀 기반 탐색 (UserBug-01)</li>
+            <li><span class="change-type ct-fix">FIX</span>Zeiss 안전체크 SunAwtFrame 오탐 제거 (UserBug-01)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release-meta">
+          <div class="release-version">v1.0.2</div>
+          <div class="release-date">2026-03-27</div>
+          <span class="release-tag tag-fix">HOTFIX</span>
+        </div>
+        <div class="release-content">
+          <div class="release-title">Zeiss 팝업 오탐 수정</div>
+          <ul class="change-list">
+            <li><span class="change-type ct-fix">FIX</span>Zeiss 저장 후 New Patient 팝업 잔류 오탐 처리 (BUG-03 부분 수정)</li>
+            <li><span class="change-type ct-fix">FIX</span>멀티모니터 환경에서 SendMouseClick 가상 스크린 기준 변환으로 교체</li>
+          </ul>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release-meta">
+          <div class="release-version">v1.0.1</div>
+          <div class="release-date">2026-03-21</div>
+          <span class="release-tag tag-stable">STABLE</span>
+        </div>
+        <div class="release-content">
+          <div class="release-title">초기 안정화</div>
+          <ul class="change-list">
+            <li><span class="change-type ct-feat">FEAT</span>Optos / Heidelberg / Zeiss 순차 주입 기본 구조 완성</li>
+            <li><span class="change-type ct-feat">FEAT</span>중복 환자 감지 및 경고 다이얼로그</li>
+            <li><span class="change-type ct-feat">FEAT</span>개별 장비 재시도 기능</li>
+            <li><span class="change-type ct-feat">FEAT</span>장비별 상태 표시 (대기/진행/성공/실패)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- MediView History -->
+    <div id="tab-view" class="history-panel">
+      <div class="release">
+        <div class="release-meta">
+          <div class="release-version">v1.2.1</div>
+          <div class="release-date">2026-04-04</div>
+          <span class="release-tag tag-latest">LATEST</span>
+        </div>
+        <div class="release-content">
+          <div class="release-title">환경설정 기능 추가</div>
+          <ul class="change-list">
+            <li><span class="change-type ct-feat">FEAT</span>트레이 아이콘 우클릭 환경설정 메뉴 추가</li>
+            <li><span class="change-type ct-feat">FEAT</span>장비별 활성화/비활성화 체크박스 설정창 추가</li>
+            <li><span class="change-type ct-feat">FEAT</span>sync_settings.ini 설정 파일 저장/읽기</li>
+            <li><span class="change-type ct-fix">FIX</span>설정 파일 키 대소문자 매칭 오류 수정</li>
+          </ul>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release-meta">
+          <div class="release-version">v1.2.0</div>
+          <div class="release-date">2026-03-31</div>
+          <span class="release-tag tag-stable">STABLE</span>
+        </div>
+        <div class="release-content">
+          <div class="release-title">멀티모니터 대응 및 안정성 개선</div>
+          <ul class="change-list">
+            <li><span class="change-type ct-fix">FIX</span>멀티모니터 환경 SendClick 가상 스크린 기준 좌표 변환 적용</li>
+            <li><span class="change-type ct-perf">PERF</span>Optos 툴바 캐싱 적용으로 반복 탐색 속도 개선</li>
+            <li><span class="change-type ct-fix">FIX</span>Zeiss Process.MainWindowHandle 오탐 수정 — 타이틀 기반 탐색으로 교체</li>
+          </ul>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release-meta">
+          <div class="release-version">v1.1.0</div>
+          <div class="release-date">2026-03-24</div>
+          <span class="release-tag tag-stable">STABLE</span>
+        </div>
+        <div class="release-content">
+          <div class="release-title">상태 오버레이 추가</div>
+          <ul class="change-list">
+            <li><span class="change-type ct-feat">FEAT</span>실시간 분배 상태 오버레이 창 (진행/성공/실패/건너뜀)</li>
+            <li><span class="change-type ct-feat">FEAT</span>실패 장비 알림 다이얼로그</li>
+            <li><span class="change-type ct-fix">FIX</span>분배 중 중복 엔터 방지 (IsDispatching 플래그)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release-meta">
+          <div class="release-version">v1.0.0</div>
+          <div class="release-date">2026-03-13</div>
+          <span class="release-tag tag-stable">STABLE</span>
+        </div>
+        <div class="release-content">
+          <div class="release-title">최초 릴리즈</div>
+          <ul class="change-list">
+            <li><span class="change-type ct-feat">FEAT</span>트레이 백그라운드 실행 구조</li>
+            <li><span class="change-type ct-feat">FEAT</span>엔터 키 / 그리드 더블클릭 감지 훅</li>
+            <li><span class="change-type ct-feat">FEAT</span>Optos / Heidelberg / Zeiss 환자번호 자동 분배</li>
+            <li><span class="change-type ct-feat">FEAT</span>중복 실행 방지 (Mutex)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  <p>&copy; 2026 CodeAnchor Studio. All rights reserved.</p>
+  <div class="footer-logo">Ssg<span>Eye</span></div>
+  <div class="footer-copy">© 2026 SsgEye. 안과 자동화 솔루션.</div>
 </footer>
 
 <script>
-  function switchTab(name) {
-    document.querySelectorAll('.flow-tab').forEach(t => t.classList.remove('active', 'blue', 'teal'));
-    document.querySelectorAll('.flow-panel').forEach(p => p.classList.remove('active'));
+// Tab switching
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    b.classList.toggle('active', (i===0&&name==='sync')||(i===1&&name==='view'));
+  });
+  document.querySelectorAll('.history-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+}
 
-    const panel = document.getElementById('panel-' + name);
-    panel.classList.add('active');
-
-    const tabs = document.querySelectorAll('.flow-tab');
-    if (name === 'medisync') {
-      tabs[0].classList.add('active', 'blue');
-    } else {
-      tabs[1].classList.add('active', 'teal');
-    }
-  }
-
-  function toggleHistory(btn) {
-    btn.parentElement.classList.toggle('active');
-  }
+// Scroll fade-up
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 </script>
-
 </body>
 </html>
