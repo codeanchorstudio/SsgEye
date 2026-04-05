@@ -32,167 +32,168 @@
   nav { position: sticky; top: 0; z-index: 100; background: rgba(247,249,255,0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 60px; }
   .nav-logo { font-family: var(--display); font-weight: 700; font-size: 15px; color: var(--navy); display: flex; align-items: center; gap: 8px; }
   .nav-logo .dot { width: 8px; height: 8px; background: var(--blue); border-radius: 50%; }
-  .nav-links { display: flex; gap: 2rem; font-size: 13px; color: var(--muted); }
-  .nav-links a { text-decoration: none; color: inherit; transition: color .2s; }
-  .nav-links a:hover { color: var(--blue); }
 
   /* HERO */
-  .hero { padding: 6rem 2rem 4rem; text-align: center; position: relative; overflow: hidden; }
+  .hero { padding: 6rem 2rem 4rem; text-align: center; }
   h1 { font-family: var(--display); font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 700; color: var(--navy); line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 1rem; }
   h1 em { font-style: normal; color: var(--blue); }
   .hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 600px; margin: 0 auto 2.5rem; }
 
-  /* VERSION BADGE */
-  .v-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--white); border: 1px solid var(--border); padding: 6px 14px; border-radius: 50px; font-family: var(--mono); font-size: 12px; margin-bottom: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
-  .v-badge .status { width: 8px; height: 8px; background: #10B981; border-radius: 50%; }
+  /* NEW: RELEASE SECTION (최신 배포) */
+  .release-container { max-width: 1000px; margin: 0 auto 4rem; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px; padding: 0 2rem; }
+  .release-main { background: var(--navy); color: #fff; border-radius: 20px; padding: 2.5rem; }
+  .btn-dl { background: var(--blue-light); color: #fff; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 15px; display: inline-flex; align-items: center; gap: 10px; margin-top: 1.5rem; transition: 0.2s; }
+  .btn-dl:hover { background: var(--blue); transform: translateY(-2px); }
+  
+  .release-side { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; }
+  .update-list { list-style: none; font-size: 13px; color: var(--muted); }
+  .update-list li { margin-bottom: 8px; display: flex; gap: 8px; }
+  .update-list li::before { content: '•'; color: var(--blue); }
 
-  /* DOWNLOAD SECTION (NEW) */
-  .dl-container { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px; padding: 0 2rem; }
-  .dl-main { background: var(--navy); color: #fff; border-radius: 20px; padding: 2.5rem; position: relative; }
-  .dl-main h2 { font-family: var(--display); font-size: 24px; margin-bottom: 1rem; color: #fff; }
-  .dl-btn-group { display: flex; gap: 12px; margin-top: 2rem; flex-wrap: wrap; }
-  .btn-dl { background: var(--blue-light); color: #fff; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 15px; display: inline-flex; align-items: center; gap: 10px; transition: transform 0.2s; }
-  .btn-dl:hover { transform: translateY(-2px); background: var(--blue); }
+  /* TABS (기존 디자인 복구) */
+  .flow-tabs { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; }
+  .flow-tab { padding: 0.8rem 2rem; border-radius: 50px; border: 1px solid var(--border); background: var(--white); cursor: pointer; font-weight: 500; font-size: 14px; transition: 0.3s; }
+  .flow-tab.active.blue { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .flow-tab.active.teal { background: var(--teal); color: #fff; border-color: var(--teal); }
 
-  .dl-side { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; }
-  .dl-side h3 { font-size: 14px; color: var(--navy); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
-  .update-list { list-style: none; }
-  .update-list li { font-size: 13px; color: var(--muted); margin-bottom: 8px; display: flex; gap: 8px; }
-  .update-list li::before { content: '•'; color: var(--blue); font-weight: bold; }
+  /* PANELS */
+  .flow-panel { display: none; max-width: 1000px; margin: 0 auto; padding: 0 2rem; }
+  .flow-panel.active { display: block; animation: fadeIn 0.5s ease-out; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* HISTORY SECTION (NEW) */
-  .history-section { max-width: 1000px; margin: 4rem auto; padding: 0 2rem; }
-  .history-header { border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-end; }
-  .history-title { font-family: var(--display); font-size: 20px; color: var(--navy); }
+  .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+  .card { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 2.5rem; transition: 0.3s; }
+  .card:hover { border-color: var(--blue-light); transform: translateY(-5px); }
+  .card h3 { font-size: 18px; margin-bottom: 1rem; color: var(--navy); }
 
-  .history-item { background: var(--white); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
-  .history-trigger { width: 100%; padding: 1.2rem 1.5rem; border: none; background: none; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-  .history-ver { font-family: var(--mono); font-weight: 600; color: var(--navy); font-size: 15px; }
-  .history-date { font-size: 12px; color: var(--muted); font-family: var(--mono); }
-  .history-content { padding: 0 1.5rem 1.5rem; display: none; border-top: 1px dashed var(--border); }
-  .history-item.active .history-content { display: block; padding-top: 1.2rem; }
-  .history-tags { display: flex; gap: 6px; margin-bottom: 12px; }
-  .tag { font-size: 10px; padding: 2px 8px; border-radius: 4px; font-family: var(--mono); text-transform: uppercase; font-weight: 600; }
-  .tag-feat { background: #E0F2FE; color: #0369A1; }
-  .tag-fix { background: #FEF2F2; color: #B91C1C; }
+  /* HISTORY SECTION */
+  .history-section { max-width: 1000px; margin: 6rem auto; padding: 0 2rem; }
+  .history-item { background: var(--white); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
+  .history-trigger { width: 100%; padding: 1.2rem 1.5rem; border: none; background: none; text-align: left; cursor: pointer; display: flex; justify-content: space-between; }
+  .history-content { padding: 0 1.5rem 1.5rem; display: none; font-size: 13px; border-top: 1px dashed var(--border); padding-top: 1rem; }
+  .history-item.active .history-content { display: block; }
 
-  footer { text-align: center; padding: 4rem 2rem; font-family: var(--mono); font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); margin-top: 4rem; }
+  footer { text-align: center; padding: 4rem 2rem; font-family: var(--mono); font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); }
 
-  @media (max-width: 850px) { .dl-container { grid-template-columns: 1fr; } }
+  @media (max-width: 850px) { .release-container { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 
 <nav>
   <div class="nav-logo"><span class="dot"></span> CodeAnchor Studio</div>
-  <div class="nav-links">
-    <a href="#download">최신 배포</a>
-    <a href="#history">변경 이력</a>
-    <a href="mailto:support@codeanchor.io">고객 지원</a>
+  <div class="nav-links" style="font-size: 13px; color: var(--muted); display: flex; gap: 20px;">
+    <a href="#download" style="text-decoration: none; color: inherit;">배포센터</a>
+    <a href="#history" style="text-decoration: none; color: inherit;">히스토리</a>
   </div>
 </nav>
 
 <div class="hero">
-  <div class="v-badge">
-    <span class="status"></span>
-    Latest Release: <strong>v1.0.5</strong> (2026-04-05)
-  </div>
+  <div style="font-family: var(--mono); font-size: 12px; color: var(--blue); margin-bottom: 1rem;">OFFICIAL RELEASE PORTAL</div>
   <h1>신세계 안과 RPA <em>MediSync</em></h1>
-  <p class="hero-sub">병원 원무 및 진료 효율화를 위한 전문가용 RPA 솔루션.<br>검사 프로그램 간의 완벽한 데이터 동기화를 경험하세요.</p>
+  <p class="hero-sub">기존의 복잡한 업무를 자동화하여 진료에만 집중할 수 있는 환경을 만듭니다.</p>
 </div>
 
-<div class="dl-container" id="download">
-  <div class="dl-main">
-    <h2>🚀 최신 버전 다운로드</h2>
-    <p style="opacity: 0.7; font-size: 14px;">관리자 권한으로 실행 시 가장 안정적으로 동작합니다.</p>
-    
-    <div class="dl-btn-group">
-      <a href="https://github.com/codeanchorstudio/SsgEye/releases/download/v1.0.5/MediSync_v1.0.5.zip" class="btn-dl">
-        📥 MediSync v1.0.5 다운로드 (.zip)
-      </a>
-    </div>
-
-    <div style="margin-top: 2rem; display: flex; gap: 20px; font-size: 12px; color: rgba(255,255,255,0.5); font-family: var(--mono);">
-      <span>SIZE: 42.5MB</span>
-      <span>OS: Windows 10/11</span>
-      <span>REQ: .NET 6.0</span>
-    </div>
+<div class="release-container" id="download">
+  <div class="release-main">
+    <div style="font-family: var(--mono); font-size: 12px; opacity: 0.6; margin-bottom: 0.5rem;">CURRENT STABLE VERSION</div>
+    <h2 style="font-family: var(--display);">MediSync v1.0.5</h2>
+    <a href="https://github.com/codeanchorstudio/SsgEye/releases/download/v1.0.5/MediSync_v1.0.5.zip" class="btn-dl">
+      📥 최신 버전 다운로드 (.zip)
+    </a>
+    <div style="margin-top: 1.5rem; font-size: 12px; opacity: 0.5; font-family: var(--mono);">Released on 2026-04-05 · Windows 10/11</div>
   </div>
-
-  <div class="dl-side">
-    <h3>✨ v1.0.5 주요 변경 사항</h3>
+  <div class="release-side">
+    <h3 style="font-size: 14px; margin-bottom: 1rem;">v1.0.5 업데이트 요약</h3>
     <ul class="update-list">
-      <li>Zeiss 검사 장비 연동 안정화</li>
-      <li>환자 번호 중복 체크 로직 개선</li>
-      <li>대시보드 응답 속도 20% 향상</li>
-      <li>간헐적 UI 멈춤 현상 수정</li>
+      <li>Zeiss 장비 연동 모듈 안정화</li>
+      <li>대시보드 로딩 속도 개선</li>
+      <li>환자 데이터 동기화 예외 처리 강화</li>
     </ul>
   </div>
 </div>
 
-<div class="history-section" id="history">
-  <div class="history-header">
-    <h2 class="history-title">릴리즈 히스토리</h2>
-    <span style="font-size: 12px; color: var(--muted);">Total 5 Releases</span>
-  </div>
+<div class="flow-tabs">
+  <div class="flow-tab active blue" onclick="switchTab('medisync')">MediSync (데이터 동기화)</div>
+  <div class="flow-tab" onclick="switchTab('mediview')">MediView (이미지 뷰어)</div>
+</div>
 
-  <div class="history-item">
+<div id="panel-medisync" class="flow-panel active">
+  <div class="feature-grid">
+    <div class="card">
+      <h3>자동 데이터 동기화</h3>
+      <p style="font-size: 14px; color: var(--muted);">원무 접수와 동시에 각 검사 장비로 환자 정보를 자동으로 전송합니다.</p>
+    </div>
+    <div class="card">
+      <h3>장비 통합 관리</h3>
+      <p style="font-size: 14px; color: var(--muted);">Optos, Zeiss, Heidelberg 등 다양한 제조사의 장비를 하나의 시스템으로 연결합니다.</p>
+    </div>
+  </div>
+</div>
+
+<div id="panel-mediview" class="flow-panel">
+  <div class="feature-grid">
+    <div class="card">
+      <h3>고해상도 이미지 뷰어</h3>
+      <p style="font-size: 14px; color: var(--muted);">검사 결과를 진료실에서 즉시 고해상도로 확인하고 판독할 수 있습니다.</p>
+    </div>
+    <div class="card">
+      <h3>히스토리 비교</h3>
+      <p style="font-size: 14px; color: var(--muted);">이전 검사 결과와 현재 결과를 한 화면에서 대조하여 경과를 관찰합니다.</p>
+    </div>
+  </div>
+</div>
+
+<div class="history-section" id="history">
+  <h2 style="font-family: var(--display); font-size: 20px; margin-bottom: 2rem;">릴리즈 히스토리</h2>
+  
+  <div class="history-item active">
     <button class="history-trigger" onclick="toggleHistory(this)">
-      <span class="history-ver">v1.0.5</span>
-      <span class="history-date">2026. 04. 05</span>
+      <span style="font-weight: 600;">v1.0.5</span>
+      <span style="color: var(--muted); font-size: 12px;">2026. 04. 05</span>
     </button>
     <div class="history-content">
-      <div class="history-tags"><span class="tag tag-feat">Feature</span><span class="tag tag-fix">Fix</span></div>
       <ul class="update-list">
         <li>[신규] Zeiss 장비 데이터 파싱 최적화</li>
-        <li>[수정] 특정 환경에서 로그 파일이 생성되지 않던 문제 해결</li>
-        <li>[개선] 네트워크 재연결 시도 로직 강화</li>
+        <li>[수정] 특정 환경에서 로그 파일 생성 오류 해결</li>
       </ul>
     </div>
   </div>
 
   <div class="history-item">
     <button class="history-trigger" onclick="toggleHistory(this)">
-      <span class="history-ver">v1.0.2</span>
-      <span class="history-date">2026. 03. 20</span>
+      <span style="font-weight: 600;">v1.0.0</span>
+      <span style="color: var(--muted); font-size: 12px;">2026. 02. 28</span>
     </button>
     <div class="history-content">
-      <div class="history-tags"><span class="tag tag-feat">Feature</span></div>
-      <ul class="update-list">
-        <li>[신규] Optos 데이터 동기화 모듈 추가</li>
-        <li>[신규] 사용자 설정 백업/복원 기능</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="history-item">
-    <button class="history-trigger" onclick="toggleHistory(this)">
-      <span class="history-ver">v1.0.0</span>
-      <span class="history-date">2026. 02. 28</span>
-    </button>
-    <div class="history-content">
-      <div class="history-tags"><span class="tag tag-feat">Launch</span></div>
-      <ul class="update-list">
-        <li>[출시] 신세계 안과 전용 MediSync 공식 배포</li>
-        <li>기본 원무 접수 프로그램 연동 기능</li>
-      </ul>
+      <p>신세계 안과 RPA 솔루션 공식 런칭</p>
     </div>
   </div>
 </div>
 
 <footer>
   <p>&copy; 2026 CodeAnchor Studio. All rights reserved.</p>
-  <p style="margin-top: 8px; opacity: 0.5;">Confidential - Internal Use Only</p>
 </footer>
 
 <script>
-  function toggleHistory(btn) {
-    const item = btn.parentElement;
-    item.classList.toggle('active');
+  function switchTab(name) {
+    document.querySelectorAll('.flow-tab').forEach(t => t.classList.remove('active', 'blue', 'teal'));
+    document.querySelectorAll('.flow-panel').forEach(p => p.classList.remove('active'));
+
+    const panel = document.getElementById('panel-' + name);
+    panel.classList.add('active');
+
+    const tabs = document.querySelectorAll('.flow-tab');
+    if (name === 'medisync') {
+      tabs[0].classList.add('active', 'blue');
+    } else {
+      tabs[1].classList.add('active', 'teal');
+    }
   }
 
-  // 첫 번째 히스토리는 기본으로 열어둠
-  document.querySelector('.history-item').classList.add('active');
+  function toggleHistory(btn) {
+    btn.parentElement.classList.toggle('active');
+  }
 </script>
 
 </body>
